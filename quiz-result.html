@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Quiz Results</title>
+
+<style>
+body {
+  font-family: Arial;
+  background: #f4f6fb;
+  margin: 0;
+}
+
+header {
+  background: #243b55;
+  color: white;
+  text-align: center;
+  padding: 15px;
+}
+
+.container {
+  width: 85%;
+  margin: 20px auto;
+}
+
+.card {
+  background: white;
+  padding: 15px;
+  margin: 15px 0;
+  border-radius: 10px;
+  box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+}
+
+.top {
+  display: flex;
+  justify-content: space-between;
+}
+
+.grade {
+  font-weight: bold;
+  padding: 5px 10px;
+  border-radius: 6px;
+  color: white;
+}
+
+.A { background: green; }
+.B { background: #28a745; }
+.C { background: orange; }
+.D { background: red; }
+
+button {
+  margin-top: 10px;
+  padding: 6px 12px;
+  border: none;
+  border-radius: 6px;
+  background: #007bff;
+  color: white;
+  cursor: pointer;
+}
+
+</style>
+</head>
+
+<body>
+
+<a href="quiz.html" style="position:fixed;bottom:20px;left:20px;z-index:100;display:inline-flex;align-items:center;text-decoration:none;color:#6C5CE7;font-size:20px;background:rgba(108,92,231,0.1);padding:8px 16px;border-radius:20px;border:1px solid rgba(108,92,231,0.3);">&#8592;</a>
+
+<header>
+  <h2>📊 Student Quiz Results</h2>
+</header>
+
+<div class="container" id="resultList"></div>
+
+<script>
+
+// SAMPLE QUIZ DATA
+let results = [
+  {id:1, student:"Krishn", quiz:"Math Quiz", score:9, total:10},
+  {id:2, student:"Ananya", quiz:"Science Quiz", score:7, total:10},
+  {id:3, student:"Ravi", quiz:"English Quiz", score:5, total:10},
+  {id:4, student:"Sneha", quiz:"History Quiz", score:3, total:10}
+];
+
+// GRADE FUNCTION
+function getGrade(score, total) {
+  let percent = (score / total) * 100;
+
+  if (percent >= 90) return "A";
+  if (percent >= 75) return "B";
+  if (percent >= 50) return "C";
+  return "D";
+}
+
+// RENDER
+function renderResults() {
+  let html = "";
+
+  results.forEach(r => {
+    let grade = getGrade(r.score, r.total);
+
+    html += `
+      <div class="card">
+        <div class="top">
+          <h3>${r.quiz}</h3>
+          <span class="grade ${grade}">Grade: ${grade}</span>
+        </div>
+
+        <p><b>Student:</b> ${r.student}</p>
+        <p><b>Score:</b> ${r.score} / ${r.total}</p>
+        <p><b>Percentage:</b> ${((r.score/r.total)*100).toFixed(1)}%</p>
+
+        <button onclick="viewDetails(${r.id})">View Details</button>
+      </div>
+    `;
+  });
+
+  document.getElementById("resultList").innerHTML = html;
+}
+
+// VIEW DETAILS
+function viewDetails(id) {
+  const r = results.find(x => x.id === id);
+  alert(`Student: ${r.student}
+Quiz: ${r.quiz}
+Score: ${r.score}/${r.total}`);
+}
+
+// LOAD
+renderResults();
+
+</script>
+
+</body>
+</html>

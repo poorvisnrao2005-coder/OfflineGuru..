@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>OfflineGuru Login</title>
+<link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<div class="container">
+  
+<h1>OfflineGuru</h1>
+
+<div class="tabs">
+<button onclick="showLogin('student')">Student Login</button>
+<button onclick="showLogin('teacher')">Teacher Login</button>
+</div>
+
+<!-- Student Login -->
+<div id="student" class="login-box">
+<h2>Student Login</h2>
+
+<input type="text" placeholder="Student ID" id="studentId">
+
+<input type="password" placeholder="Password" id="studentPassword">
+
+<button onclick="studentLogin()">Login</button>
+
+</div>
+
+<!-- Teacher Login -->
+<div id="teacher" class="login-box hidden">
+<h2>Teacher Login</h2>
+
+<input type="text" placeholder="Teacher ID" id="teacherId">
+
+<input type="password" placeholder="Password" id="teacherPassword">
+
+<button onclick="teacherLogin()">Login</button>
+
+</div>
+
+</div>
+
+<script src="script.js"></script>
+
+</body>
+</html>

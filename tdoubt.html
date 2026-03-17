@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Student Doubts</title>
+
+<style>
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+font-family: Arial, sans-serif;
+min-height: 100vh;
+background: #0d1b2a;
+overflow-x: hidden;
+}
+
+body::before {
+content: '';
+position: fixed;
+inset: 0;
+background-image:
+  linear-gradient(rgba(0,180,180,0.04) 1px, transparent 1px),
+  linear-gradient(90deg, rgba(0,180,180,0.04) 1px, transparent 1px);
+background-size: 40px 40px;
+z-index: 0;
+}
+
+body::after {
+content: '';
+position: fixed;
+width: 600px; height: 600px;
+background: radial-gradient(circle, rgba(0,180,180,0.12), transparent 70%);
+top: -150px; right: -150px;
+border-radius: 50%;
+animation: blobMove 10s ease-in-out infinite alternate;
+z-index: 0;
+}
+
+@keyframes blobMove {
+0%   { transform: translate(0,0) scale(1); }
+100% { transform: translate(-60px,60px) scale(1.1); }
+}
+
+.page-title {
+text-align: center;
+color: #00dcdc;
+font-size: 26px;
+letter-spacing: 1px;
+margin: 30px 0 20px;
+position: relative;
+z-index: 10;
+}
+
+.doubts-grid {
+display: grid;
+grid-template-columns: repeat(2, 1fr);
+gap: 24px;
+max-width: 900px;
+margin: 0 auto;
+padding: 0 30px 80px;
+position: relative;
+z-index: 10;
+}
+
+.doubt-card {
+background: rgba(255,255,255,0.04);
+backdrop-filter: blur(10px);
+border: 1px solid rgba(0,180,180,0.2);
+border-radius: 18px;
+padding: 24px;
+transition: transform 0.3s, box-shadow 0.3s;
+animation: cardFloat 4s ease-in-out infinite;
+}
+
+.doubt-card:nth-child(2) { animation-delay: 0.5s; }
+.doubt-card:nth-child(3) { animation-delay: 1s; }
+.doubt-card:nth-child(4) { animation-delay: 1.5s; }
+
+@keyframes cardFloat {
+0%, 100% { transform: translateY(0); }
+50%       { transform: translateY(-8px); }
+}
+
+.doubt-card:hover {
+transform: translateY(-10px);
+box-shadow: 0 15px 40px rgba(0,180,180,0.2);
+}
+
+.card-banner {
+height: 60px;
+border-radius: 12px;
+display: flex;
+align-items: center;
+justify-content: center;
+font-size: 28px;
+margin-bottom: 14px;
+}
+
+.doubt-card:nth-child(1) .card-banner { background: linear-gradient(135deg, #00b4b4, #6C5CE7); }
+.doubt-card:nth-child(2) .card-banner { background: linear-gradient(135deg, #0984e3, #00cec9); }
+.doubt-card:nth-child(3) .card-banner { background: linear-gradient(135deg, #6C5CE7, #a29bfe); }
+.doubt-card:nth-child(4) .card-banner { background: linear-gradient(135deg, #00b894, #00dcdc); }
+
+.student-name {
+color: #00dcdc;
+font-size: 16px;
+font-weight: bold;
+margin-bottom: 4px;
+}
+
+.subject-badge {
+display: inline-block;
+padding: 3px 12px;
+border-radius: 20px;
+font-size: 12px;
+color: white;
+margin-bottom: 10px;
+background: rgba(0,180,180,0.2);
+border: 1px solid rgba(0,180,180,0.3);
+}
+
+.question {
+font-size: 13px;
+color: rgba(255,255,255,0.65);
+margin-bottom: 14px;
+line-height: 1.5;
+}
+
+.teacher-reply {
+padding: 10px 14px;
+border-radius: 10px;
+background: rgba(0,180,180,0.08);
+border-left: 3px solid #00dcdc;
+color: rgba(255,255,255,0.75);
+font-size: 13px;
+margin-bottom: 10px;
+}
+
+.status {
+color: #00dcdc;
+font-size: 13px;
+font-weight: bold;
+}
+
+</style>
+</head>
+
+<body>
+
+<a href="teacher-dashboard.html" style="position:fixed;bottom:20px;left:20px;z-index:100;display:inline-flex;align-items:center;text-decoration:none;color:#00dcdc;font-size:20px;background:rgba(0,180,180,0.1);padding:8px 16px;border-radius:20px;border:1px solid rgba(0,180,180,0.3);">&#8592;</a>
+<a href="teacher-dashboard.html" style="position:fixed;bottom:20px;right:20px;z-index:100;display:inline-flex;align-items:center;text-decoration:none;color:#00dcdc;font-size:20px;background:rgba(0,180,180,0.1);padding:8px 16px;border-radius:20px;border:1px solid rgba(0,180,180,0.3);">&#8594;</a>
+
+<h2 class="page-title">💬 Solved Student Doubts</h2>
+
+<div class="doubts-grid">
+
+  <div class="doubt-card">
+    <div class="card-banner">📐</div>
+    <p class="student-name">👤 Rahul</p>
+    <span class="subject-badge">Mathematics</span>
+    <p class="question">How do we solve quadratic equations using factorization?</p>
+    <div class="teacher-reply">To solve quadratic equations by factorization, write the equation as ax²+bx+c=0, split the middle term and factor the expression.</div>
+    <p class="status">✔ Problem Solved</p>
+  </div>
+
+  <div class="doubt-card">
+    <div class="card-banner">🔬</div>
+    <p class="student-name">👤 Ananya</p>
+    <span class="subject-badge">Science</span>
+    <p class="question">What is the difference between velocity and acceleration?</p>
+    <div class="teacher-reply">Velocity is the speed of an object in a particular direction, while acceleration is the rate at which velocity changes over time.</div>
+    <p class="status">✔ Problem Solved</p>
+  </div>
+
+  <div class="doubt-card">
+    <div class="card-banner">📖</div>
+    <p class="student-name">👤 Kiran</p>
+    <span class="subject-badge">English</span>
+    <p class="question">How can I improve my essay writing?</p>
+    <div class="teacher-reply">Start by organizing your ideas with an introduction, body paragraphs, and conclusion. Practice reading and writing regularly.</div>
+    <p class="status">✔ Problem Solved</p>
+  </div>
+
+  <div class="doubt-card">
+    <div class="card-banner">🌍</div>
+    <p class="student-name">👤 Arjun</p>
+    <span class="subject-badge">Geography</span>
+    <p class="question">Why do earthquakes occur?</p>
+    <div class="teacher-reply">Earthquakes occur due to movement of tectonic plates beneath the Earth's surface which releases energy as seismic waves.</div>
+    <p class="status">✔ Problem Solved</p>
+  </div>
+
+</div>
+
+</body>
+</html>

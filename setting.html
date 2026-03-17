@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Settings</title>
+
+<style>
+
+body{
+font-family:Arial;
+background:#f4f6fb;
+margin:0;
+}
+
+.navbar{
+background:#5a67d8;
+color:white;
+padding:15px;
+font-size:22px;
+text-align:center;
+}
+
+.container{
+width:600px;
+margin:40px auto;
+background:white;
+padding:25px;
+border-radius:10px;
+box-shadow:0 5px 15px rgba(0,0,0,0.1);
+}
+
+h2{
+text-align:center;
+margin-bottom:20px;
+}
+
+label{
+display:block;
+margin-top:15px;
+font-weight:bold;
+}
+
+input,select{
+width:100%;
+padding:10px;
+margin-top:5px;
+border-radius:6px;
+border:1px solid #ccc;
+}
+
+.toggle{
+display:flex;
+align-items:center;
+margin-top:10px;
+}
+
+.toggle input{
+width:auto;
+margin-right:10px;
+}
+
+button{
+margin-top:20px;
+padding:12px;
+width:100%;
+border:none;
+background:#5a67d8;
+color:white;
+font-size:16px;
+border-radius:6px;
+cursor:pointer;
+}
+
+button:hover{
+background:#434190;
+}
+
+#message{
+margin-top:15px;
+text-align:center;
+color:green;
+font-weight:bold;
+}
+
+.dark{
+background:#1a202c;
+color:white;
+}
+
+.dark .container{
+background:#2d3748;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<a href="student-dashboard.html" style="position:fixed;bottom:20px;left:20px;z-index:100;display:inline-flex;align-items:center;text-decoration:none;color:#5a67d8;font-size:20px;background:rgba(90,103,216,0.1);padding:8px 16px;border-radius:20px;border:1px solid rgba(90,103,216,0.3);">&#8592;</a>
+
+<div class="navbar">
+Settings
+</div>
+
+<div class="container">
+
+<h2>Account Settings</h2>
+
+<!-- Profile -->
+
+<label>Full Name</label>
+<input type="text" id="name" value="John Doe">
+
+<label>Email</label>
+<input type="email" id="email" value="john@example.com">
+
+<label>Role</label>
+<select id="role">
+<option>Student</option>
+<option>Teacher</option>
+</select>
+
+<!-- Password -->
+
+<label>New Password</label>
+<input type="password" id="password" placeholder="Enter new password">
+
+<!-- Preferences -->
+
+<div class="toggle">
+<input type="checkbox" id="notifications" checked>
+<label>Enable Notifications</label>
+</div>
+
+<div class="toggle">
+<input type="checkbox" id="darkMode">
+<label>Dark Mode</label>
+</div>
+
+<button onclick="saveSettings()">Save Settings</button>
+
+<div id="message"></div>
+
+</div>
+
+<script>
+
+function saveSettings(){
+
+const name=document.getElementById("name").value;
+const email=document.getElementById("email").value;
+const role=document.getElementById("role").value;
+const password=document.getElementById("password").value;
+const notifications=document.getElementById("notifications").checked;
+
+localStorage.setItem("name",name);
+localStorage.setItem("email",email);
+localStorage.setItem("role",role);
+localStorage.setItem("notifications",notifications);
+
+document.getElementById("message").innerText="Settings Saved Successfully!";
+
+}
+
+// Dark Mode Toggle
+
+document.getElementById("darkMode").addEventListener("change",function(){
+
+if(this.checked){
+document.body.classList.add("dark");
+}else{
+document.body.classList.remove("dark");
+}
+
+});
+
+</script>
+
+</body>
+</html>

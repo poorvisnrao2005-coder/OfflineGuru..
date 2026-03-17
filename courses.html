@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Courses</title>
+
+<style>
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+font-family: Arial, sans-serif;
+min-height: 100vh;
+background: #f0eeff;
+overflow-x: hidden;
+}
+
+/* animated blobs */
+body::before, body::after {
+content: '';
+position: fixed;
+border-radius: 50%;
+filter: blur(80px);
+opacity: 0.2;
+animation: blobMove 8s ease-in-out infinite alternate;
+z-index: 0;
+}
+
+body::before {
+width: 500px; height: 500px;
+background: radial-gradient(circle, #6C5CE7, #a29bfe);
+top: -100px; left: -100px;
+}
+
+body::after {
+width: 400px; height: 400px;
+background: radial-gradient(circle, #fd79a8, #e17055);
+bottom: -100px; right: -100px;
+animation-delay: 3s;
+}
+
+@keyframes blobMove {
+0%   { transform: translate(0,0) scale(1); }
+100% { transform: translate(60px,60px) scale(1.15); }
+}
+
+/* stars */
+.stars {
+position: fixed;
+top: 0; left: 0;
+width: 100%; height: 100%;
+pointer-events: none;
+background-image:
+  radial-gradient(1px 1px at 10% 20%, white, transparent),
+  radial-gradient(1px 1px at 30% 60%, white, transparent),
+  radial-gradient(1px 1px at 55% 15%, white, transparent),
+  radial-gradient(1px 1px at 75% 80%, white, transparent),
+  radial-gradient(1px 1px at 90% 40%, white, transparent),
+  radial-gradient(1px 1px at 20% 85%, white, transparent),
+  radial-gradient(1px 1px at 65% 50%, white, transparent);
+opacity: 0.6;
+z-index: 0;
+}
+
+/* back arrow */
+.back-arrow {
+position: relative;
+z-index: 10;
+display: inline-flex;
+align-items: center;
+margin: 20px 25px;
+text-decoration: none;
+color: #6C5CE7;
+font-size: 20px;
+background: rgba(108,92,231,0.1);
+padding: 8px 16px;
+border-radius: 20px;
+border: 1px solid rgba(108,92,231,0.3);
+transition: background 0.2s;
+}
+
+.back-arrow:hover { background: rgba(108,92,231,0.2); }
+
+/* header */
+.page-title {
+text-align: center;
+color: #2d3436;
+font-size: 28px;
+letter-spacing: 1px;
+margin-bottom: 30px;
+position: relative;
+z-index: 10;
+}
+
+/* grid */
+.courses-grid {
+display: grid;
+grid-template-columns: repeat(3, 1fr);
+gap: 24px;
+max-width: 1000px;
+margin: 0 auto;
+padding: 0 30px 50px;
+position: relative;
+z-index: 10;
+}
+
+/* card */
+.course-card {
+background: white;
+border: 1px solid rgba(108,92,231,0.15);
+border-radius: 20px;
+padding: 24px;
+text-decoration: none;
+color: inherit;
+box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+transition: transform 0.3s, box-shadow 0.3s;
+animation: cardFloat 4s ease-in-out infinite;
+}
+
+.course-card:nth-child(2) { animation-delay: 0.5s; }
+.course-card:nth-child(3) { animation-delay: 1s; }
+.course-card:nth-child(4) { animation-delay: 1.5s; }
+.course-card:nth-child(5) { animation-delay: 2s; }
+.course-card:nth-child(6) { animation-delay: 2.5s; }
+
+@keyframes cardFloat {
+0%, 100% { transform: translateY(0); }
+50%       { transform: translateY(-8px); }
+}
+
+.course-card:hover {
+transform: translateY(-12px) scale(1.02);
+box-shadow: 0 20px 50px rgba(108,92,231,0.4);
+}
+
+/* icon banner */
+.card-banner {
+height: 70px;
+border-radius: 14px;
+display: flex;
+align-items: center;
+justify-content: center;
+font-size: 32px;
+margin-bottom: 16px;
+}
+
+.course-card:nth-child(1) .card-banner { background: linear-gradient(135deg, #6C5CE7, #a29bfe); }
+.course-card:nth-child(2) .card-banner { background: linear-gradient(135deg, #fd79a8, #e17055); }
+.course-card:nth-child(3) .card-banner { background: linear-gradient(135deg, #00b894, #00cec9); }
+.course-card:nth-child(4) .card-banner { background: linear-gradient(135deg, #fdcb6e, #e17055); }
+.course-card:nth-child(5) .card-banner { background: linear-gradient(135deg, #0984e3, #74b9ff); }
+.course-card:nth-child(6) .card-banner { background: linear-gradient(135deg, #fd79a8, #a29bfe); }
+
+.course-card h3 {
+color: #2d3436;
+font-size: 18px;
+margin-bottom: 6px;
+text-shadow: 0 0 10px rgba(255,255,255,0.3);
+}
+
+.course-card .lessons {
+font-size: 12px;
+color: #888;
+text-transform: uppercase;
+letter-spacing: 0.5px;
+margin-bottom: 14px;
+}
+
+/* progress */
+.progress-label {
+display: flex;
+justify-content: space-between;
+font-size: 12px;
+color: #555;
+margin-bottom: 6px;
+}
+
+.progress-bar {
+background: rgba(108,92,231,0.1);
+height: 8px;
+border-radius: 10px;
+overflow: hidden;
+}
+
+.progress {
+height: 8px;
+border-radius: 10px;
+animation: fillBar 1.5s ease forwards;
+}
+
+@keyframes fillBar {
+from { width: 0; }
+}
+
+.course-card:nth-child(1) .progress { background: linear-gradient(90deg, #6C5CE7, #a29bfe); }
+.course-card:nth-child(2) .progress { background: linear-gradient(90deg, #fd79a8, #e17055); }
+.course-card:nth-child(3) .progress { background: linear-gradient(90deg, #00b894, #00cec9); }
+.course-card:nth-child(4) .progress { background: linear-gradient(90deg, #fdcb6e, #e17055); }
+.course-card:nth-child(5) .progress { background: linear-gradient(90deg, #0984e3, #74b9ff); }
+.course-card:nth-child(6) .progress { background: linear-gradient(90deg, #fd79a8, #a29bfe); }
+
+</style>
+</head>
+
+<body>
+
+<div class="stars"></div>
+
+<a href="student-dashboard.html" style="position:fixed;bottom:20px;left:20px;z-index:100;display:inline-flex;align-items:center;text-decoration:none;color:#6C5CE7;font-size:20px;background:rgba(108,92,231,0.1);padding:8px 16px;border-radius:20px;border:1px solid rgba(108,92,231,0.3);">&#8592;</a>
+<a href="assignment.html" style="position:fixed;bottom:20px;right:20px;z-index:100;display:inline-flex;align-items:center;text-decoration:none;color:#6C5CE7;font-size:20px;background:rgba(108,92,231,0.1);padding:8px 16px;border-radius:20px;border:1px solid rgba(108,92,231,0.3);">&#8594;</a>
+
+<h2 class="page-title">✨ Your Courses</h2>
+
+<div class="courses-grid">
+
+  <a href="assignment.html" class="course-card">
+    <div class="card-banner">📐</div>
+    <h3>Mathematics</h3>
+    <p class="lessons">12 lessons</p>
+    <div class="progress-label"><span>Progress</span><span>65%</span></div>
+    <div class="progress-bar"><div class="progress" style="width:65%"></div></div>
+  </a>
+
+  <a href="assignment.html" class="course-card">
+    <div class="card-banner">🔬</div>
+    <h3>Science</h3>
+    <p class="lessons">8 lessons</p>
+    <div class="progress-label"><span>Progress</span><span>40%</span></div>
+    <div class="progress-bar"><div class="progress" style="width:40%"></div></div>
+  </a>
+
+  <a href="assignment.html" class="course-card">
+    <div class="card-banner">📖</div>
+    <h3>English</h3>
+    <p class="lessons">10 lessons</p>
+    <div class="progress-label"><span>Progress</span><span>80%</span></div>
+    <div class="progress-bar"><div class="progress" style="width:80%"></div></div>
+  </a>
+
+  <a href="assignment.html" class="course-card">
+    <div class="card-banner">🏛️</div>
+    <h3>History</h3>
+    <p class="lessons">6 lessons</p>
+    <div class="progress-label"><span>Progress</span><span>25%</span></div>
+    <div class="progress-bar"><div class="progress" style="width:25%"></div></div>
+  </a>
+
+  <a href="assignment.html" class="course-card">
+    <div class="card-banner">🌍</div>
+    <h3>Geography</h3>
+    <p class="lessons">7 lessons</p>
+    <div class="progress-label"><span>Progress</span><span>55%</span></div>
+    <div class="progress-bar"><div class="progress" style="width:55%"></div></div>
+  </a>
+
+  <a href="assignment.html" class="course-card">
+    <div class="card-banner">🎨</div>
+    <h3>Art</h3>
+    <p class="lessons">5 lessons</p>
+    <div class="progress-label"><span>Progress</span><span>90%</span></div>
+    <div class="progress-bar"><div class="progress" style="width:90%"></div></div>
+  </a>
+
+</div>
+
+</body>
+</html>

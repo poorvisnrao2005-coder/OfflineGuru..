@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Teacher Courses</title>
+
+<style>
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+font-family: Arial, sans-serif;
+min-height: 100vh;
+background: #0d1b2a;
+overflow-x: hidden;
+}
+
+body::before {
+content: '';
+position: fixed;
+inset: 0;
+background-image:
+  linear-gradient(rgba(0,180,180,0.04) 1px, transparent 1px),
+  linear-gradient(90deg, rgba(0,180,180,0.04) 1px, transparent 1px);
+background-size: 40px 40px;
+z-index: 0;
+}
+
+body::after {
+content: '';
+position: fixed;
+width: 600px; height: 600px;
+background: radial-gradient(circle, rgba(0,180,180,0.12), transparent 70%);
+top: -150px; right: -150px;
+border-radius: 50%;
+animation: blobMove 10s ease-in-out infinite alternate;
+z-index: 0;
+}
+
+@keyframes blobMove {
+0%   { transform: translate(0,0) scale(1); }
+100% { transform: translate(-60px,60px) scale(1.1); }
+}
+
+.page-title {
+text-align: center;
+color: #00dcdc;
+font-size: 26px;
+letter-spacing: 1px;
+margin: 30px 0 20px;
+position: relative;
+z-index: 10;
+}
+
+.courses-grid {
+display: grid;
+grid-template-columns: repeat(3, 1fr);
+gap: 24px;
+max-width: 1000px;
+margin: 0 auto;
+padding: 0 30px 80px;
+position: relative;
+z-index: 10;
+}
+
+.course-card {
+background: rgba(255,255,255,0.04);
+backdrop-filter: blur(10px);
+border: 1px solid rgba(0,180,180,0.2);
+border-radius: 18px;
+padding: 24px;
+transition: transform 0.3s, box-shadow 0.3s;
+animation: cardFloat 4s ease-in-out infinite;
+}
+
+.course-card:nth-child(2) { animation-delay: 0.4s; }
+.course-card:nth-child(3) { animation-delay: 0.8s; }
+.course-card:nth-child(4) { animation-delay: 1.2s; }
+.course-card:nth-child(5) { animation-delay: 1.6s; }
+.course-card:nth-child(6) { animation-delay: 2s; }
+
+@keyframes cardFloat {
+0%, 100% { transform: translateY(0); }
+50%       { transform: translateY(-8px); }
+}
+
+.course-card:hover {
+transform: translateY(-12px);
+box-shadow: 0 15px 40px rgba(0,180,180,0.2);
+}
+
+.card-banner {
+height: 65px;
+border-radius: 12px;
+display: flex;
+align-items: center;
+justify-content: center;
+font-size: 30px;
+margin-bottom: 14px;
+}
+
+.course-card:nth-child(1) .card-banner { background: linear-gradient(135deg, #00b4b4, #6C5CE7); }
+.course-card:nth-child(2) .card-banner { background: linear-gradient(135deg, #0984e3, #00cec9); }
+.course-card:nth-child(3) .card-banner { background: linear-gradient(135deg, #6C5CE7, #a29bfe); }
+.course-card:nth-child(4) .card-banner { background: linear-gradient(135deg, #00b894, #00dcdc); }
+.course-card:nth-child(5) .card-banner { background: linear-gradient(135deg, #0984e3, #74b9ff); }
+.course-card:nth-child(6) .card-banner { background: linear-gradient(135deg, #00b4b4, #0984e3); }
+
+.course-card h3 {
+color: #00dcdc;
+font-size: 17px;
+margin-bottom: 6px;
+}
+
+.course-card p {
+color: rgba(255,255,255,0.55);
+font-size: 13px;
+}
+
+</style>
+</head>
+
+<body>
+
+<a href="teacher-dashboard.html" style="position:fixed;bottom:20px;left:20px;z-index:100;display:inline-flex;align-items:center;text-decoration:none;color:#00dcdc;font-size:20px;background:rgba(0,180,180,0.1);padding:8px 16px;border-radius:20px;border:1px solid rgba(0,180,180,0.3);">&#8592;</a>
+<a href="tassignment.html" style="position:fixed;bottom:20px;right:20px;z-index:100;display:inline-flex;align-items:center;text-decoration:none;color:#00dcdc;font-size:20px;background:rgba(0,180,180,0.1);padding:8px 16px;border-radius:20px;border:1px solid rgba(0,180,180,0.3);">&#8594;</a>
+
+<h2 class="page-title">📚 Your Courses</h2>
+
+<div class="courses-grid">
+
+  <div class="course-card">
+    <div class="card-banner">📐</div>
+    <h3>Mathematics</h3>
+    <p>12 lessons</p>
+  </div>
+
+  <div class="course-card">
+    <div class="card-banner">🔬</div>
+    <h3>Science</h3>
+    <p>8 lessons</p>
+  </div>
+
+  <div class="course-card">
+    <div class="card-banner">📖</div>
+    <h3>English</h3>
+    <p>10 lessons</p>
+  </div>
+
+  <div class="course-card">
+    <div class="card-banner">🏛️</div>
+    <h3>History</h3>
+    <p>6 lessons</p>
+  </div>
+
+  <div class="course-card">
+    <div class="card-banner">🌍</div>
+    <h3>Geography</h3>
+    <p>7 lessons</p>
+  </div>
+
+  <div class="course-card">
+    <div class="card-banner">🎨</div>
+    <h3>Art</h3>
+    <p>5 lessons</p>
+  </div>
+
+</div>
+
+</body>
+</html>

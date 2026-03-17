@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Student Dashboard Home</title>
+
+<style>
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+font-family: Arial, sans-serif;
+min-height: 100vh;
+background: #f0eeff;
+overflow-x: hidden;
+}
+
+/* animated blobs */
+body::before, body::after {
+content: '';
+position: fixed;
+border-radius: 50%;
+filter: blur(80px);
+opacity: 0.2;
+animation: blobMove 8s ease-in-out infinite alternate;
+z-index: 0;
+}
+
+body::before {
+width: 500px; height: 500px;
+background: radial-gradient(circle, #6C5CE7, #a29bfe);
+top: -100px; left: -100px;
+}
+
+body::after {
+width: 400px; height: 400px;
+background: radial-gradient(circle, #fd79a8, #e17055);
+bottom: -100px; right: -100px;
+animation-delay: 3s;
+}
+
+@keyframes blobMove {
+0%   { transform: translate(0,0) scale(1); }
+100% { transform: translate(60px,60px) scale(1.15); }
+}
+
+/* stars */
+.stars {
+position: fixed;
+top: 0; left: 0;
+width: 100%; height: 100%;
+pointer-events: none;
+background-image:
+  radial-gradient(1px 1px at 10% 20%, white, transparent),
+  radial-gradient(1px 1px at 30% 60%, white, transparent),
+  radial-gradient(1px 1px at 55% 15%, white, transparent),
+  radial-gradient(1px 1px at 75% 80%, white, transparent),
+  radial-gradient(1px 1px at 90% 40%, white, transparent),
+  radial-gradient(1px 1px at 20% 85%, white, transparent),
+  radial-gradient(1px 1px at 65% 50%, white, transparent);
+opacity: 0.6;
+z-index: 0;
+}
+
+/* header */
+.header {
+background: linear-gradient(135deg, #6C5CE7, #fd79a8, #fdcb6e);
+background-size: 300% 300%;
+animation: bannerShift 5s ease infinite;
+color: white;
+text-align: center;
+padding: 22px;
+font-size: 22px;
+font-weight: bold;
+letter-spacing: 1px;
+position: relative;
+z-index: 10;
+text-shadow: 0 0 20px rgba(0,0,0,0.3);
+}
+
+@keyframes bannerShift {
+0%   { background-position: 0% 50%; }
+50%  { background-position: 100% 50%; }
+100% { background-position: 0% 50%; }
+}
+
+/* container */
+.container {
+padding: 30px 40px 50px;
+position: relative;
+z-index: 10;
+}
+
+/* welcome */
+.welcome {
+text-align: center;
+color: #2d3436;
+font-size: 20px;
+margin-bottom: 30px;
+}
+
+/* feature grid */
+.features {
+display: grid;
+grid-template-columns: repeat(3, 1fr);
+gap: 24px;
+max-width: 900px;
+margin: auto;
+}
+
+/* feature card */
+.feature-card {
+background: white;
+border: 1px solid rgba(108,92,231,0.15);
+border-radius: 20px;
+padding: 28px;
+text-align: center;
+box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+transition: transform 0.3s, box-shadow 0.3s;
+animation: cardFloat 4s ease-in-out infinite;
+}
+
+.feature-card:nth-child(2) { animation-delay: 0.4s; }
+.feature-card:nth-child(3) { animation-delay: 0.8s; }
+.feature-card:nth-child(4) { animation-delay: 1.2s; }
+.feature-card:nth-child(5) { animation-delay: 1.6s; }
+.feature-card:nth-child(6) { animation-delay: 2s; }
+
+.feature-card:nth-child(7) { animation-delay: 2.4s; }
+.feature-card:nth-child(8) { animation-delay: 2.8s; }
+
+.feature-card:nth-child(9) { animation-delay: 3.2s; }
+
+@keyframes cardFloat {
+0%, 100% { transform: translateY(0); }
+50%       { transform: translateY(-8px); }
+}
+
+.feature-card:hover {
+transform: translateY(-12px) scale(1.03);
+box-shadow: 0 20px 50px rgba(108,92,231,0.4);
+}
+
+/* icon banner */
+.card-banner {
+height: 65px;
+border-radius: 14px;
+display: flex;
+align-items: center;
+justify-content: center;
+font-size: 30px;
+margin-bottom: 16px;
+}
+
+a:nth-child(1) .card-banner { background: linear-gradient(135deg, #6C5CE7, #a29bfe); }
+a:nth-child(2) .card-banner { background: linear-gradient(135deg, #fd79a8, #e17055); }
+a:nth-child(3) .card-banner { background: linear-gradient(135deg, #00b894, #00cec9); }
+a:nth-child(4) .card-banner { background: linear-gradient(135deg, #fdcb6e, #e17055); }
+a:nth-child(5) .card-banner { background: linear-gradient(135deg, #0984e3, #74b9ff); }
+a:nth-child(6) .card-banner { background: linear-gradient(135deg, #fd79a8, #a29bfe); }
+
+a:nth-child(7) .card-banner { background: linear-gradient(135deg, #6C5CE7, #00cec9); }
+a:nth-child(8) .card-banner { background: linear-gradient(135deg, #fdcb6e, #fd79a8); }
+
+a:nth-child(9) .card-banner { background: linear-gradient(135deg, #636e72, #2d3436); }
+
+.feature-card h3 {
+color: #5A4BD8;
+font-size: 16px;
+margin-bottom: 8px;
+text-shadow: 0 0 10px rgba(255,255,255,0.3);
+}
+
+.feature-card p {
+color: #555;
+font-size: 13px;
+line-height: 1.5;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="stars"></div>
+
+<div class="header">🎓 Student Dashboard Home</div>
+
+<div class="container">
+
+<h2 class="welcome">✨ Welcome to OfflineGuru Learning Platform</h2>
+
+<div class="features">
+
+<a href="courses.html" style="text-decoration:none;">
+<div class="feature-card">
+<div class="card-banner">📚</div>
+<h3>Courses</h3>
+<p>Students can access all subjects like Mathematics, Science, English, History, Geography, and Art.</p>
+</div>
+</a>
+
+<a href="assignment.html" style="text-decoration:none;">
+<div class="feature-card">
+<div class="card-banner">📝</div>
+<h3>Assignments</h3>
+<p>Students can view assignments given by teachers and submit their work online.</p>
+</div>
+</a>
+
+<a href="download.html" style="text-decoration:none;">
+<div class="feature-card">
+<div class="card-banner">⬇️</div>
+<h3>Offline Downloads</h3>
+<p>Videos, images, and learning materials can be downloaded for offline study.</p>
+</div>
+</a>
+
+<a href="doubt.html" style="text-decoration:none;">
+<div class="feature-card">
+<div class="card-banner">❓</div>
+<h3>Doubt Section</h3>
+<p>Students can ask questions and get answers from teachers.</p>
+</div>
+</a>
+
+<a href="progress.html" style="text-decoration:none;">
+<div class="feature-card">
+<div class="card-banner">📊</div>
+<h3>Progress Tracking</h3>
+<p>Students can monitor their learning progress and completed lessons.</p>
+</div>
+</a>
+
+<a href="quiz.html" style="text-decoration:none;">
+<div class="feature-card">
+<div class="card-banner">🎯</div>
+<h3>Quiz</h3>
+<p>Students can attempt subject-wise quizzes to test their knowledge.</p>
+</div>
+</a>
+
+<a href="test.html" style="text-decoration:none;">
+<div class="feature-card">
+<div class="card-banner">📋</div>
+<h3>Test</h3>
+<p>Students can take full subject tests and get their scores instantly.</p>
+</div>
+</a>
+
+<a href="profile.html" style="text-decoration:none;">
+<div class="feature-card">
+<div class="card-banner">👤</div>
+<h3>Profile</h3>
+<p>Students can manage their personal profile and learning information.</p>
+</div>
+</a>
+
+<a href="setting.html" style="text-decoration:none;">
+<div class="feature-card">
+<div class="card-banner">⚙️</div>
+<h3>Settings</h3>
+<p>Students can manage their account settings and preferences.</p>
+</div>
+</a>
+
+</div>
+</div>
+
+</body>
+</html>

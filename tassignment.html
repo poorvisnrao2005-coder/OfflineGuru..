@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Student Assignments</title>
+
+<style>
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+font-family: Arial, sans-serif;
+min-height: 100vh;
+background: #0d1b2a;
+overflow-x: hidden;
+}
+
+body::before {
+content: '';
+position: fixed;
+inset: 0;
+background-image:
+  linear-gradient(rgba(0,180,180,0.04) 1px, transparent 1px),
+  linear-gradient(90deg, rgba(0,180,180,0.04) 1px, transparent 1px);
+background-size: 40px 40px;
+z-index: 0;
+}
+
+body::after {
+content: '';
+position: fixed;
+width: 600px; height: 600px;
+background: radial-gradient(circle, rgba(0,180,180,0.12), transparent 70%);
+top: -150px; right: -150px;
+border-radius: 50%;
+animation: blobMove 10s ease-in-out infinite alternate;
+z-index: 0;
+}
+
+@keyframes blobMove {
+0%   { transform: translate(0,0) scale(1); }
+100% { transform: translate(-60px,60px) scale(1.1); }
+}
+
+.page-title {
+text-align: center;
+color: #00dcdc;
+font-size: 26px;
+letter-spacing: 1px;
+margin: 30px 0 20px;
+position: relative;
+z-index: 10;
+}
+
+.table-wrap {
+width: 85%;
+margin: 0 auto 80px;
+position: relative;
+z-index: 10;
+}
+
+table {
+width: 100%;
+border-collapse: collapse;
+background: rgba(255,255,255,0.03);
+backdrop-filter: blur(10px);
+border-radius: 16px;
+overflow: hidden;
+border: 1px solid rgba(0,180,180,0.15);
+}
+
+th, td {
+padding: 14px 16px;
+text-align: center;
+border-bottom: 1px solid rgba(0,180,180,0.08);
+}
+
+th {
+background: linear-gradient(90deg, rgba(0,180,180,0.2), rgba(108,92,231,0.2));
+color: #00dcdc;
+font-size: 13px;
+text-transform: uppercase;
+letter-spacing: 1px;
+}
+
+td { color: rgba(255,255,255,0.75); font-size: 14px; }
+
+tr:hover td { background: rgba(0,180,180,0.05); color: white; }
+
+.view-btn {
+padding: 6px 14px;
+background: rgba(0,180,180,0.1);
+border: 1px solid rgba(0,180,180,0.4);
+color: #00dcdc;
+border-radius: 20px;
+cursor: pointer;
+font-size: 13px;
+transition: all 0.2s;
+}
+
+.view-btn:hover { background: rgba(0,180,180,0.3); }
+
+.grade-btn {
+padding: 6px 14px;
+background: rgba(108,92,231,0.1);
+border: 1px solid rgba(108,92,231,0.4);
+color: #a29bfe;
+border-radius: 20px;
+cursor: pointer;
+font-size: 13px;
+transition: all 0.2s;
+}
+
+.grade-btn:hover { background: rgba(108,92,231,0.3); }
+
+</style>
+</head>
+
+<body>
+
+<a href="teacher-dashboard.html" style="position:fixed;bottom:20px;left:20px;z-index:100;display:inline-flex;align-items:center;text-decoration:none;color:#00dcdc;font-size:20px;background:rgba(0,180,180,0.1);padding:8px 16px;border-radius:20px;border:1px solid rgba(0,180,180,0.3);">&#8592;</a>
+<a href="tdoubt.html" style="position:fixed;bottom:20px;right:20px;z-index:100;display:inline-flex;align-items:center;text-decoration:none;color:#00dcdc;font-size:20px;background:rgba(0,180,180,0.1);padding:8px 16px;border-radius:20px;border:1px solid rgba(0,180,180,0.3);">&#8594;</a>
+
+<h2 class="page-title">📝 Student Assignment Submissions</h2>
+
+<div class="table-wrap">
+<table>
+  <tr>
+    <th>Student Name</th>
+    <th>Subject</th>
+    <th>Assignment</th>
+    <th>View</th>
+    <th>Grade</th>
+  </tr>
+
+  <!-- Mathematics -->
+  <tr><td colspan="5" style="background:rgba(108,92,231,0.15);color:#a29bfe;font-weight:bold;letter-spacing:1px;font-size:13px;">📐 MATHEMATICS</td></tr>
+  <tr onclick="window.location='week-assignments.html?subject=Mathematics'" style="cursor:pointer;">
+    <td>Krishn</td><td>Mathematics</td><td>Algebra Problems</td>
+    <td><a href="week-assignments.html?subject=Mathematics"><button class="view-btn">View</button></a></td>
+    <td><button class="grade-btn">Grade</button></td>
+  </tr>
+
+  <!-- Science -->
+  <tr><td colspan="5" style="background:rgba(0,180,180,0.15);color:#00dcdc;font-weight:bold;letter-spacing:1px;font-size:13px;">🔬 SCIENCE</td></tr>
+  <tr onclick="window.location='week-assignments.html?subject=Science'" style="cursor:pointer;">
+    <td>Ananya</td><td>Science</td><td>Newton's Laws</td>
+    <td><a href="week-assignments.html?subject=Science"><button class="view-btn">View</button></a></td>
+    <td><button class="grade-btn">Grade</button></td>
+  </tr>
+
+  <!-- English -->
+  <tr><td colspan="5" style="background:rgba(0,184,148,0.15);color:#00b894;font-weight:bold;letter-spacing:1px;font-size:13px;">📖 ENGLISH</td></tr>
+  <tr onclick="window.location='week-assignments.html?subject=English'" style="cursor:pointer;">
+    <td>Kiran</td><td>English</td><td>Essay Writing</td>
+    <td><a href="week-assignments.html?subject=English"><button class="view-btn">View</button></a></td>
+    <td><button class="grade-btn">Grade</button></td>
+  </tr>
+
+  <!-- History -->
+  <tr><td colspan="5" style="background:rgba(253,203,110,0.15);color:#fdcb6e;font-weight:bold;letter-spacing:1px;font-size:13px;">🏛️ HISTORY</td></tr>
+  <tr onclick="window.location='week-assignments.html?subject=History'" style="cursor:pointer;">
+    <td>Megha</td><td>History</td><td>World War II</td>
+    <td><a href="week-assignments.html?subject=History"><button class="view-btn">View</button></a></td>
+    <td><button class="grade-btn">Grade</button></td>
+  </tr>
+
+  <!-- Geography -->
+  <tr><td colspan="5" style="background:rgba(9,132,227,0.15);color:#74b9ff;font-weight:bold;letter-spacing:1px;font-size:13px;">🌍 GEOGRAPHY</td></tr>
+  <tr onclick="window.location='week-assignments.html?subject=Geography'" style="cursor:pointer;">
+    <td>Arjun</td><td>Geography</td><td>Climate Types</td>
+    <td><a href="week-assignments.html?subject=Geography"><button class="view-btn">View</button></a></td>
+    <td><button class="grade-btn">Grade</button></td>
+  </tr>
+
+  <!-- Art -->
+  <tr><td colspan="5" style="background:rgba(253,121,168,0.15);color:#fd79a8;font-weight:bold;letter-spacing:1px;font-size:13px;">🎨 ART</td></tr>
+  <tr onclick="window.location='week-assignments.html?subject=Art'" style="cursor:pointer;">
+    <td>Sara</td><td>Art</td><td>Landscape Drawing</td>
+    <td><a href="week-assignments.html?subject=Art"><button class="view-btn">View</button></a></td>
+    <td><button class="grade-btn">Grade</button></td>
+  </tr>
+
+</table>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,96 @@
+body{
+font-family:Arial, sans-serif;
+background:linear-gradient(135deg,#dfe9ff,#f5f8ff);
+}
+
+/* center table */
+
+.subject-table{
+margin:70px auto;
+border-spacing:35px;
+}
+
+/* subject boxes */
+
+.subject-box{
+background:linear-gradient(145deg,#ffffff,#f3f6ff);
+width:320px;
+padding:22px;
+border-radius:18px;
+box-shadow:0 10px 25px rgba(0,0,0,0.08);
+transition:all 0.3s ease;
+}
+
+/* hover animation */
+
+.subject-box:hover{
+transform:translateY(-8px) scale(1.02);
+box-shadow:0 15px 35px rgba(0,0,0,0.15);
+}
+
+/* header */
+
+.header{
+display:flex;
+justify-content:space-between;
+align-items:center;
+margin-bottom:12px;
+}
+
+/* icon */
+
+.icon{
+width:42px;
+height:42px;
+border-radius:12px;
+display:flex;
+align-items:center;
+justify-content:center;
+color:white;
+font-size:20px;
+box-shadow:0 4px 10px rgba(0,0,0,0.2);
+}
+
+/* lessons badge */
+
+.lessons{
+background:linear-gradient(90deg,#f0f0ff,#e5e7ff);
+padding:6px 14px;
+border-radius:25px;
+font-size:12px;
+color:#555;
+}
+
+/* progress text */
+
+.progress-text{
+display:flex;
+justify-content:space-between;
+font-size:14px;
+margin-top:10px;
+color:#444;
+}
+
+/* progress bar */
+
+.progress-bar{
+background:#e6e9ff;
+height:8px;
+border-radius:20px;
+margin-top:6px;
+}
+
+.progress{
+height:8px;
+border-radius:20px;
+background:linear-gradient(90deg,#6a5cff,#9c8cff);
+}
+
+/* colorful icons */
+
+.purple{background:linear-gradient(135deg,#6a5cff,#9c8cff);}
+.green{background:linear-gradient(135deg,#1abc9c,#2ecc71);}
+.orange{background:linear-gradient(135deg,#f39c12,#f1c40f);}
+.pink{background:linear-gradient(135deg,#ff4b7d,#ff8fb3);}
+.blue{background:linear-gradient(135deg,#3498db,#6dd5fa);}
+.violet{background:linear-gradient(135deg,#8e44ad,#c084fc);}

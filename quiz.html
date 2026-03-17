@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Student Quiz</title>
+
+<style>
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+font-family: Arial, sans-serif;
+min-height: 100vh;
+background: #f0eeff;
+overflow-x: hidden;
+display: flex;
+flex-direction: column;
+align-items: center;
+}
+
+/* animated blobs */
+body::before, body::after {
+content: '';
+position: fixed;
+border-radius: 50%;
+filter: blur(80px);
+opacity: 0.2;
+animation: blobMove 8s ease-in-out infinite alternate;
+z-index: 0;
+}
+
+body::before {
+width: 500px; height: 500px;
+background: radial-gradient(circle, #6C5CE7, #a29bfe);
+top: -100px; left: -100px;
+}
+
+body::after {
+width: 400px; height: 400px;
+background: radial-gradient(circle, #fd79a8, #e17055);
+bottom: -100px; right: -100px;
+animation-delay: 3s;
+}
+
+@keyframes blobMove {
+0%   { transform: translate(0,0) scale(1); }
+100% { transform: translate(60px,60px) scale(1.15); }
+}
+
+/* stars */
+.stars {
+position: fixed;
+top: 0; left: 0;
+width: 100%; height: 100%;
+pointer-events: none;
+background-image:
+  radial-gradient(1px 1px at 10% 20%, white, transparent),
+  radial-gradient(1px 1px at 30% 60%, white, transparent),
+  radial-gradient(1px 1px at 55% 15%, white, transparent),
+  radial-gradient(1px 1px at 75% 80%, white, transparent),
+  radial-gradient(1px 1px at 90% 40%, white, transparent),
+  radial-gradient(1px 1px at 20% 85%, white, transparent),
+  radial-gradient(1px 1px at 65% 50%, white, transparent);
+opacity: 0.6;
+z-index: 0;
+}
+
+/* page title */
+.page-title {
+color: #2d3436;
+font-size: 28px;
+letter-spacing: 1px;
+margin: 30px 0 20px;
+position: relative;
+z-index: 10;
+text-shadow: none;
+}
+
+/* subject grid */
+.subject-grid {
+display: grid;
+grid-template-columns: repeat(2, 1fr);
+gap: 20px;
+width: 500px;
+position: relative;
+z-index: 10;
+}
+
+.subject-card {
+border-radius: 20px;
+padding: 28px;
+text-align: center;
+cursor: pointer;
+border: 1px solid rgba(255,255,255,0.15);
+box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+transition: transform 0.3s, box-shadow 0.3s;
+animation: cardFloat 4s ease-in-out infinite;
+}
+
+.subject-card:nth-child(2) { animation-delay: 0.5s; }
+.subject-card:nth-child(3) { animation-delay: 1s; }
+.subject-card:nth-child(4) { animation-delay: 1.5s; }
+
+@keyframes cardFloat {
+0%, 100% { transform: translateY(0); }
+50%       { transform: translateY(-8px); }
+}
+
+.subject-card:hover {
+transform: translateY(-12px) scale(1.04);
+box-shadow: 0 20px 50px rgba(108,92,231,0.5);
+}
+
+.subject-card:nth-child(1) { background: linear-gradient(135deg, #6C5CE7, #a29bfe); }
+.subject-card:nth-child(2) { background: linear-gradient(135deg, #fd79a8, #e17055); }
+.subject-card:nth-child(3) { background: linear-gradient(135deg, #00b894, #00cec9); }
+.subject-card:nth-child(4) { background: linear-gradient(135deg, #fdcb6e, #e17055); }
+
+.subject-card .icon { font-size: 36px; margin-bottom: 10px; }
+.subject-card h3 { color: white; font-size: 18px; text-shadow: 0 0 10px rgba(0,0,0,0.3); }
+
+/* quiz box */
+.quiz-box {
+width: 520px;
+background: white;
+border: 1px solid rgba(108,92,231,0.15);
+border-radius: 24px;
+padding: 32px;
+box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+position: relative;
+z-index: 10;
+animation: cardFloat 4s ease-in-out infinite;
+}
+
+/* progress bar */
+.quiz-progress-bar {
+background: rgba(108,92,231,0.1);
+height: 6px;
+border-radius: 10px;
+margin-bottom: 24px;
+overflow: hidden;
+}
+
+.quiz-progress-fill {
+height: 6px;
+border-radius: 10px;
+background: linear-gradient(90deg, #6C5CE7, #fd79a8);
+transition: width 0.4s ease;
+}
+
+.question-text {
+color: #2d3436;
+font-size: 18px;
+margin-bottom: 24px;
+line-height: 1.6;
+text-shadow: none;
+}
+
+.question-num {
+font-size: 12px;
+color: #888;
+text-transform: uppercase;
+letter-spacing: 1px;
+margin-bottom: 8px;
+}
+
+/* options */
+.option {
+background: rgba(108,92,231,0.05);
+border: 1px solid rgba(108,92,231,0.15);
+color: #2d3436;
+padding: 12px 18px;
+margin: 10px 0;
+border-radius: 14px;
+cursor: pointer;
+font-size: 14px;
+transition: all 0.2s;
+text-align: left;
+}
+
+.option:hover {
+background: rgba(108,92,231,0.3);
+border-color: rgba(162,155,254,0.5);
+color: white;
+transform: translateX(5px);
+}
+
+.option.correct {
+background: rgba(0,184,148,0.25);
+border-color: rgba(0,184,148,0.5);
+color: #55efc4;
+}
+
+.option.wrong {
+background: rgba(253,121,168,0.25);
+border-color: rgba(253,121,168,0.5);
+color: #fd79a8;
+}
+
+/* next button */
+.next-btn {
+width: 100%;
+margin-top: 20px;
+padding: 12px;
+border: none;
+border-radius: 25px;
+background: linear-gradient(90deg, #6C5CE7, #a29bfe);
+color: white;
+font-size: 15px;
+cursor: pointer;
+box-shadow: 0 4px 20px rgba(108,92,231,0.5);
+transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.next-btn:hover {
+transform: scale(1.04);
+box-shadow: 0 6px 25px rgba(108,92,231,0.7);
+}
+
+/* score card */
+.score-card {
+text-align: center;
+}
+
+.score-card h2 {
+color: #2d3436;
+font-size: 24px;
+margin-bottom: 10px;
+text-shadow: 0 0 20px rgba(162,155,254,0.8);
+}
+
+.score-badge {
+display: inline-block;
+font-size: 52px;
+font-weight: bold;
+background: linear-gradient(135deg, #a29bfe, #fd79a8);
+-webkit-background-clip: text;
+-webkit-text-fill-color: transparent;
+margin: 16px 0;
+}
+
+.score-msg {
+color: #555;
+font-size: 14px;
+margin-bottom: 24px;
+}
+
+.retry-btn {
+padding: 12px 35px;
+border: none;
+border-radius: 25px;
+background: linear-gradient(90deg, #fd79a8, #e17055);
+color: white;
+font-size: 15px;
+cursor: pointer;
+box-shadow: 0 4px 20px rgba(253,121,168,0.5);
+transition: transform 0.2s;
+}
+
+.retry-btn:hover { transform: scale(1.05); }
+
+</style>
+</head>
+
+<body>
+
+<div class="stars"></div>
+
+<a href="student-dashboard.html" style="position:fixed;bottom:20px;left:20px;z-index:100;display:inline-flex;align-items:center;text-decoration:none;color:#6C5CE7;font-size:20px;background:rgba(108,92,231,0.1);padding:8px 16px;border-radius:20px;border:1px solid rgba(108,92,231,0.3);">&#8592;</a>
+<a href="test.html" style="position:fixed;bottom:20px;right:20px;z-index:100;display:inline-flex;align-items:center;text-decoration:none;color:#6C5CE7;font-size:20px;background:rgba(108,92,231,0.1);padding:8px 16px;border-radius:20px;border:1px solid rgba(108,92,231,0.3);">&#8594;</a>
+
+<a href="quiz-result.html" style="position:fixed;top:20px;right:80px;z-index:100;display:inline-flex;align-items:center;text-decoration:none;color:#6C5CE7;font-size:14px;font-weight:bold;background:rgba(108,92,231,0.1);padding:8px 16px;border-radius:20px;border:1px solid rgba(108,92,231,0.3);">📊 View Results</a>
+
+<h2 class="page-title">🎯 Student Quiz</h2>
+
+<!-- Subject Selection -->
+<div class="subject-grid" id="subjectSelect">
+
+  <div class="subject-card" onclick="startQuiz('math')">
+    <div class="icon">📐</div>
+    <h3>Math</h3>
+  </div>
+
+  <div class="subject-card" onclick="startQuiz('science')">
+    <div class="icon">🔬</div>
+    <h3>Science</h3>
+  </div>
+
+  <div class="subject-card" onclick="startQuiz('english')">
+    <div class="icon">📖</div>
+    <h3>English</h3>
+  </div>
+
+  <div class="subject-card" onclick="startQuiz('computer')">
+    <div class="icon">💻</div>
+    <h3>Computer</h3>
+  </div>
+
+</div>
+
+<!-- Quiz Box -->
+<div class="quiz-box" id="quizBox" style="display:none;">
+  <div class="quiz-progress-bar"><div class="quiz-progress-fill" id="progressFill"></div></div>
+  <p class="question-num" id="questionNum"></p>
+  <p class="question-text" id="question"></p>
+  <div id="options"></div>
+  <button class="next-btn" onclick="nextQuestion()">Next ➜</button>
+</div>
+
+<script>
+
+const quizzes = {
+  math:[
+    { question:"5 + 7 = ?", options:["10","12","14","15"], answer:1 },
+    { question:"9 × 3 = ?", options:["27","21","24","18"], answer:0 }
+  ],
+  science:[
+    { question:"Water formula is?", options:["CO2","H2O","O2","NaCl"], answer:1 },
+    { question:"Earth revolves around?", options:["Moon","Mars","Sun","Venus"], answer:2 }
+  ],
+  english:[
+    { question:"Synonym of Happy?", options:["Sad","Joyful","Angry","Tired"], answer:1 },
+    { question:"Opposite of Big?", options:["Large","Huge","Small","Tall"], answer:2 }
+  ],
+  computer:[
+    { question:"CPU stands for?", options:["Central Processing Unit","Computer Personal Unit","Central Print Unit","Control Processing Unit"], answer:0 },
+    { question:"Which is a programming language?", options:["HTML","Python","HTTP","WWW"], answer:1 }
+  ]
+};
+
+let currentQuiz=[], currentQuestion=0, score=0, answered=false;
+
+function startQuiz(subject){
+  currentQuiz = quizzes[subject];
+  currentQuestion = 0;
+  score = 0;
+  document.getElementById("subjectSelect").style.display = "none";
+  document.getElementById("quizBox").style.display = "block";
+  loadQuestion();
+}
+
+function loadQuestion(){
+  answered = false;
+  const q = currentQuiz[currentQuestion];
+  document.getElementById("questionNum").innerText = "Question " + (currentQuestion+1) + " of " + currentQuiz.length;
+  document.getElementById("question").innerText = q.question;
+  document.getElementById("progressFill").style.width = ((currentQuestion / currentQuiz.length) * 100) + "%";
+
+  const optionsDiv = document.getElementById("options");
+  optionsDiv.innerHTML = "";
+
+  q.options.forEach((opt, index) => {
+    const div = document.createElement("div");
+    div.classList.add("option");
+    div.innerText = opt;
+    div.onclick = () => {
+      if(answered) return;
+      answered = true;
+      if(index === q.answer){ div.classList.add("correct"); score++; }
+      else {
+        div.classList.add("wrong");
+        optionsDiv.children[q.answer].classList.add("correct");
+      }
+    };
+    optionsDiv.appendChild(div);
+  });
+}
+
+function nextQuestion(){
+  currentQuestion++;
+  if(currentQuestion < currentQuiz.length){
+    loadQuestion();
+  } else {
+    const msg = score === currentQuiz.length ? "🎉 Perfect Score!" : score >= currentQuiz.length/2 ? "👍 Good Job!" : "📚 Keep Practicing!";
+    document.getElementById("quizBox").innerHTML = `
+      <div class="score-card">
+        <h2>Quiz Finished!</h2>
+        <div class="score-badge">${score}/${currentQuiz.length}</div>
+        <p class="score-msg">${msg}</p>
+        <a href="quiz-result.html" style="display:inline-block;margin-bottom:12px;padding:12px 35px;background:linear-gradient(90deg,#00b894,#00cec9);color:white;border-radius:25px;text-decoration:none;font-size:15px;box-shadow:0 4px 15px rgba(0,184,148,0.4);">📊 View Results</a><br>
+        <button class="retry-btn" onclick="location.reload()">🔄 Try Again</button>
+      </div>`;
+  }
+}
+
+</script>
+
+</body>
+</html>

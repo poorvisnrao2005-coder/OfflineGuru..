@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Profile</title>
+
+<style>
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+font-family: 'Arial', sans-serif;
+min-height: 100vh;
+display: flex;
+align-items: center;
+justify-content: center;
+background: #f0eeff;
+overflow: hidden;
+}
+
+/* animated background blobs */
+body::before, body::after {
+content: '';
+position: fixed;
+border-radius: 50%;
+filter: blur(80px);
+opacity: 0.2;
+animation: blobMove 8s ease-in-out infinite alternate;
+}
+
+body::before {
+width: 500px; height: 500px;
+background: radial-gradient(circle, #6C5CE7, #a29bfe);
+top: -100px; left: -100px;
+}
+
+body::after {
+width: 400px; height: 400px;
+background: radial-gradient(circle, #fd79a8, #e17055);
+bottom: -100px; right: -100px;
+animation-delay: 3s;
+}
+
+@keyframes blobMove {
+0%   { transform: translate(0, 0) scale(1); }
+100% { transform: translate(60px, 60px) scale(1.15); }
+}
+
+/* floating stars */
+.stars {
+position: fixed;
+top: 0; left: 0;
+width: 100%; height: 100%;
+pointer-events: none;
+background-image:
+  radial-gradient(1px 1px at 10% 20%, white, transparent),
+  radial-gradient(1px 1px at 30% 60%, white, transparent),
+  radial-gradient(1px 1px at 55% 15%, white, transparent),
+  radial-gradient(1px 1px at 75% 80%, white, transparent),
+  radial-gradient(1px 1px at 90% 40%, white, transparent),
+  radial-gradient(1px 1px at 20% 85%, white, transparent),
+  radial-gradient(1px 1px at 65% 50%, white, transparent);
+opacity: 0.6;
+}
+
+/* card */
+.profile-card {
+position: relative;
+z-index: 10;
+background: white;
+border: 1px solid rgba(108,92,231,0.15);
+width: 400px;
+border-radius: 24px;
+box-shadow: 0 20px 60px rgba(0,0,0,0.5), 0 0 40px rgba(108,92,231,0.3);
+text-align: center;
+overflow: hidden;
+animation: cardFloat 4s ease-in-out infinite;
+}
+
+@keyframes cardFloat {
+0%, 100% { transform: translateY(0); }
+50%       { transform: translateY(-10px); }
+}
+
+/* banner */
+.banner {
+height: 110px;
+background: linear-gradient(135deg, #6C5CE7, #fd79a8, #fdcb6e);
+background-size: 300% 300%;
+animation: bannerShift 5s ease infinite;
+position: relative;
+}
+
+@keyframes bannerShift {
+0%   { background-position: 0% 50%; }
+50%  { background-position: 100% 50%; }
+100% { background-position: 0% 50%; }
+}
+
+.banner-pattern {
+position: absolute;
+inset: 0;
+background-image: radial-gradient(circle at 20% 50%, rgba(255,255,255,0.15) 1px, transparent 1px),
+                  radial-gradient(circle at 80% 30%, rgba(255,255,255,0.1) 1px, transparent 1px);
+background-size: 30px 30px;
+}
+
+/* avatar */
+.avatar-wrap {
+margin-top: -55px;
+position: relative;
+display: inline-block;
+}
+
+.avatar-wrap::before {
+content: '';
+position: absolute;
+inset: -5px;
+border-radius: 50%;
+background: linear-gradient(135deg, #6C5CE7, #fd79a8, #fdcb6e);
+animation: glowSpin 3s linear infinite;
+z-index: -1;
+}
+
+@keyframes glowSpin {
+0%   { transform: rotate(0deg); filter: blur(4px); }
+100% { transform: rotate(360deg); filter: blur(4px); }
+}
+
+.avatar-wrap img {
+width: 110px;
+height: 110px;
+border-radius: 50%;
+border: 4px solid #f0eeff;
+object-fit: cover;
+display: block;
+}
+
+/* name */
+.profile-card h2 {
+margin-top: 14px;
+color: #2d3436;
+font-size: 24px;
+letter-spacing: 0.5px;
+text-shadow: none;
+}
+
+.role-badge {
+display: inline-block;
+background: linear-gradient(90deg, #6C5CE7, #fd79a8);
+color: white;
+padding: 5px 18px;
+border-radius: 20px;
+font-size: 13px;
+margin: 8px 0 20px;
+box-shadow: 0 4px 15px rgba(108,92,231,0.5);
+}
+
+/* stats */
+.stats {
+display: flex;
+justify-content: space-around;
+padding: 16px 20px;
+margin: 0 20px 20px;
+background: rgba(108,92,231,0.07);
+border-radius: 16px;
+border: 1px solid rgba(108,92,231,0.15);
+}
+
+.stat h3 {
+font-size: 24px;
+font-weight: bold;
+background: linear-gradient(135deg, #a29bfe, #fd79a8);
+-webkit-background-clip: text;
+-webkit-text-fill-color: transparent;
+}
+
+.stat p {
+font-size: 11px;
+color: #888;
+margin-top: 3px;
+text-transform: uppercase;
+letter-spacing: 0.5px;
+}
+
+/* info grid */
+.info-grid {
+display: grid;
+grid-template-columns: 1fr 1fr;
+gap: 12px;
+padding: 0 20px 20px;
+}
+
+.info-box {
+background: rgba(108,92,231,0.05);
+border-radius: 14px;
+padding: 12px 14px;
+text-align: left;
+border: 1px solid rgba(108,92,231,0.15);
+transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.info-box:hover {
+transform: translateY(-3px);
+box-shadow: 0 6px 20px rgba(108,92,231,0.3);
+}
+
+.info-box:nth-child(1) .info-icon { color: #a29bfe; }
+.info-box:nth-child(2) .info-icon { color: #fd79a8; }
+.info-box:nth-child(3) .info-icon { color: #00cec9; }
+.info-box:nth-child(4) .info-icon { color: #fdcb6e; }
+.info-box:nth-child(5) .info-icon { color: #55efc4; }
+
+.info-icon { font-size: 16px; }
+
+.info-box span {
+font-size: 10px;
+color: #888;
+text-transform: uppercase;
+letter-spacing: 0.5px;
+display: block;
+margin-top: 4px;
+}
+
+.info-box p {
+font-size: 14px;
+color: #2d3436;
+font-weight: bold;
+margin-top: 2px;
+}
+
+/* buttons */
+.btn-row {
+display: flex;
+gap: 10px;
+justify-content: center;
+padding-bottom: 25px;
+}
+
+.edit-btn {
+padding: 10px 28px;
+background: linear-gradient(90deg, #6C5CE7, #a29bfe);
+color: white;
+border: none;
+border-radius: 25px;
+font-size: 14px;
+cursor: pointer;
+box-shadow: 0 4px 20px rgba(108,92,231,0.5);
+transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.edit-btn:hover {
+transform: scale(1.06);
+box-shadow: 0 6px 25px rgba(108,92,231,0.7);
+}
+
+.msg-btn {
+padding: 10px 28px;
+background: linear-gradient(90deg, #fd79a8, #e17055);
+color: white;
+border: none;
+border-radius: 25px;
+font-size: 14px;
+cursor: pointer;
+box-shadow: 0 4px 20px rgba(253,121,168,0.5);
+transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.msg-btn:hover {
+transform: scale(1.06);
+box-shadow: 0 6px 25px rgba(253,121,168,0.7);
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="stars"></div>
+
+<a href="student-dashboard.html" style="position:fixed;bottom:20px;left:20px;z-index:100;display:inline-flex;align-items:center;text-decoration:none;color:#6C5CE7;font-size:20px;background:rgba(108,92,231,0.1);padding:8px 16px;border-radius:20px;border:1px solid rgba(108,92,231,0.3);">&#8592;</a>
+<a href="student-dashboard.html" style="position:fixed;bottom:20px;right:20px;z-index:100;display:inline-flex;align-items:center;text-decoration:none;color:#6C5CE7;font-size:20px;background:rgba(108,92,231,0.1);padding:8px 16px;border-radius:20px;border:1px solid rgba(108,92,231,0.3);">&#8594;</a>
+
+<div class="profile-card">
+
+  <div class="banner"><div class="banner-pattern"></div></div>
+
+  <div class="avatar-wrap">
+    <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Profile Photo">
+  </div>
+
+  <h2>Rahul Sharma</h2>
+  <div class="role-badge">⭐ Student</div>
+
+  <div class="stats">
+    <div class="stat"><h3>5</h3><p>Courses</p></div>
+    <div class="stat"><h3>7</h3><p>Assignments</p></div>
+    <div class="stat"><h3>85%</h3><p>Progress</p></div>
+  </div>
+
+  <div class="info-grid">
+
+    <div class="info-box">
+      <div class="info-icon">🎓</div>
+      <span>Student ID</span>
+      <p>STU101</p>
+    </div>
+
+    <div class="info-box">
+      <div class="info-icon">📧</div>
+      <span>Email</span>
+      <p>rahul@email.com</p>
+    </div>
+
+    <div class="info-box">
+      <div class="info-icon">💻</div>
+      <span>Course</span>
+      <p>Computer Science</p>
+    </div>
+
+    <div class="info-box">
+      <div class="info-icon">📚</div>
+      <span>Subjects</span>
+      <p>Math, Science</p>
+    </div>
+
+    <div class="info-box">
+      <div class="info-icon">📅</div>
+      <span>Joined</span>
+      <p>2024</p>
+    </div>
+
+  </div>
+
+  <div class="btn-row">
+    <button class="edit-btn">✏️ Edit Profile</button>
+    <button class="msg-btn">💬 Message</button>
+  </div>
+
+  <div style="padding-bottom:20px;">
+    <a href="index.html" style="display:inline-block;padding:10px 35px;background:linear-gradient(90deg,#e17055,#d63031);color:white;border-radius:25px;text-decoration:none;font-size:14px;box-shadow:0 4px 15px rgba(214,48,49,0.4);transition:transform 0.2s;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">🚪 Logout</a>
+  </div>
+
+</div>
+
+</body>
+</html>

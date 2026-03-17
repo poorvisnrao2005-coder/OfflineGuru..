@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Student Test</title>
+
+<style>
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+font-family: Arial, sans-serif;
+min-height: 100vh;
+background: #f0eeff;
+overflow-x: hidden;
+display: flex;
+flex-direction: column;
+align-items: center;
+}
+
+/* animated blobs */
+body::before, body::after {
+content: '';
+position: fixed;
+border-radius: 50%;
+filter: blur(80px);
+opacity: 0.2;
+animation: blobMove 8s ease-in-out infinite alternate;
+z-index: 0;
+}
+
+body::before {
+width: 500px; height: 500px;
+background: radial-gradient(circle, #6C5CE7, #a29bfe);
+top: -100px; left: -100px;
+}
+
+body::after {
+width: 400px; height: 400px;
+background: radial-gradient(circle, #fd79a8, #e17055);
+bottom: -100px; right: -100px;
+animation-delay: 3s;
+}
+
+@keyframes blobMove {
+0%   { transform: translate(0,0) scale(1); }
+100% { transform: translate(60px,60px) scale(1.15); }
+}
+
+/* stars */
+.stars {
+position: fixed;
+top: 0; left: 0;
+width: 100%; height: 100%;
+pointer-events: none;
+background-image:
+  radial-gradient(1px 1px at 10% 20%, white, transparent),
+  radial-gradient(1px 1px at 30% 60%, white, transparent),
+  radial-gradient(1px 1px at 55% 15%, white, transparent),
+  radial-gradient(1px 1px at 75% 80%, white, transparent),
+  radial-gradient(1px 1px at 90% 40%, white, transparent),
+  radial-gradient(1px 1px at 20% 85%, white, transparent),
+  radial-gradient(1px 1px at 65% 50%, white, transparent);
+opacity: 0.6;
+z-index: 0;
+}
+
+/* title */
+.page-title {
+color: #2d3436;
+font-size: 28px;
+letter-spacing: 1px;
+margin: 30px 0 20px;
+position: relative;
+z-index: 10;
+}
+
+/* card */
+.container {
+width: 560px;
+background: white;
+border: 1px solid rgba(108,92,231,0.15);
+border-radius: 24px;
+padding: 32px;
+box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+position: relative;
+z-index: 10;
+margin-bottom: 40px;
+animation: cardFloat 4s ease-in-out infinite;
+}
+
+@keyframes cardFloat {
+0%, 100% { transform: translateY(0); }
+50%       { transform: translateY(-8px); }
+}
+
+/* input & select */
+input[type="text"], select {
+width: 100%;
+padding: 12px 16px;
+margin: 10px 0;
+border-radius: 14px;
+border: 1px solid rgba(108,92,231,0.2);
+background: rgba(108,92,231,0.05);
+color: #2d3436;
+font-size: 14px;
+outline: none;
+transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+input[type="text"]::placeholder { color: #aaa; }
+
+input[type="text"]:focus, select:focus {
+border-color: rgba(162,155,254,0.6);
+box-shadow: 0 0 10px rgba(108,92,231,0.3);
+}
+
+select option { background: white; color: #2d3436; }
+
+/* start button */
+.start-btn {
+width: 100%;
+margin-top: 16px;
+padding: 12px;
+border: none;
+border-radius: 25px;
+background: linear-gradient(90deg, #6C5CE7, #a29bfe);
+color: white;
+font-size: 15px;
+cursor: pointer;
+box-shadow: 0 4px 20px rgba(108,92,231,0.5);
+transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.start-btn:hover {
+transform: scale(1.04);
+box-shadow: 0 6px 25px rgba(108,92,231,0.7);
+}
+
+/* question */
+.question {
+color: #2d3436;
+font-size: 15px;
+font-weight: bold;
+margin: 20px 0 10px;
+text-shadow: 0 0 10px rgba(162,155,254,0.4);
+}
+
+/* option */
+.option {
+display: flex;
+align-items: center;
+gap: 10px;
+background: rgba(108,92,231,0.05);
+border: 1px solid rgba(108,92,231,0.15);
+color: #2d3436;
+padding: 10px 16px;
+margin: 8px 0;
+border-radius: 14px;
+cursor: pointer;
+font-size: 14px;
+transition: all 0.2s;
+}
+
+.option:hover {
+background: rgba(108,92,231,0.3);
+border-color: rgba(162,155,254,0.5);
+color: white;
+}
+
+.option input[type="radio"] { accent-color: #a29bfe; }
+
+/* submit button */
+.submit-btn {
+width: 100%;
+margin-top: 20px;
+padding: 12px;
+border: none;
+border-radius: 25px;
+background: linear-gradient(90deg, #fd79a8, #e17055);
+color: white;
+font-size: 15px;
+cursor: pointer;
+box-shadow: 0 4px 20px rgba(253,121,168,0.5);
+transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.submit-btn:hover {
+transform: scale(1.04);
+box-shadow: 0 6px 25px rgba(253,121,168,0.7);
+}
+
+/* result */
+#result {
+text-align: center;
+margin-top: 20px;
+}
+
+#result h2 {
+color: #2d3436;
+font-size: 22px;
+margin-bottom: 10px;
+text-shadow: 0 0 20px rgba(162,155,254,0.8);
+}
+
+.score-badge {
+display: inline-block;
+font-size: 52px;
+font-weight: bold;
+background: linear-gradient(135deg, #a29bfe, #fd79a8);
+-webkit-background-clip: text;
+-webkit-text-fill-color: transparent;
+margin: 10px 0;
+}
+
+.score-msg {
+color: #555;
+font-size: 14px;
+margin-bottom: 20px;
+}
+
+.retry-btn {
+padding: 12px 35px;
+border: none;
+border-radius: 25px;
+background: linear-gradient(90deg, #6C5CE7, #a29bfe);
+color: white;
+font-size: 15px;
+cursor: pointer;
+box-shadow: 0 4px 20px rgba(108,92,231,0.5);
+transition: transform 0.2s;
+}
+
+.retry-btn:hover { transform: scale(1.05); }
+
+</style>
+</head>
+
+<body>
+
+<div class="stars"></div>
+
+<a href="student-dashboard.html" style="position:fixed;bottom:20px;left:20px;z-index:100;display:inline-flex;align-items:center;text-decoration:none;color:#6C5CE7;font-size:20px;background:rgba(108,92,231,0.1);padding:8px 16px;border-radius:20px;border:1px solid rgba(108,92,231,0.3);">&#8592;</a>
+<a href="profile.html" style="position:fixed;bottom:20px;right:20px;z-index:100;display:inline-flex;align-items:center;text-decoration:none;color:#6C5CE7;font-size:20px;background:rgba(108,92,231,0.1);padding:8px 16px;border-radius:20px;border:1px solid rgba(108,92,231,0.3);">&#8594;</a>
+
+<h2 class="page-title">📝 Student Test</h2>
+
+<div class="container">
+
+  <input type="text" id="studentName" placeholder="✏️ Enter your name">
+
+  <select id="subject">
+    <option value="math">📐 Math</option>
+    <option value="science">🔬 Science</option>
+    <option value="english">📖 English</option>
+  </select>
+
+  <button class="start-btn" onclick="startTest()">🚀 Start Test</button>
+
+  <div id="quizArea"></div>
+  <div id="result"></div>
+
+</div>
+
+<script>
+
+const tests = {
+  math:[
+    {q:"10 + 5 = ?", options:["12","15","20","18"], answer:1},
+    {q:"8 × 6 = ?", options:["42","36","48","40"], answer:2},
+    {q:"20 ÷ 4 = ?", options:["2","4","5","6"], answer:2}
+  ],
+  science:[
+    {q:"Sun is a ?", options:["Planet","Star","Galaxy","Asteroid"], answer:1},
+    {q:"Gas we breathe?", options:["Oxygen","Carbon","Hydrogen","Helium"], answer:0},
+    {q:"Plants make food by?", options:["Respiration","Photosynthesis","Digestion","Evaporation"], answer:1}
+  ],
+  english:[
+    {q:"Plural of Child?", options:["Childs","Children","Childes","Childrens"], answer:1},
+    {q:"Opposite of Hot?", options:["Warm","Cold","Cool","Ice"], answer:1},
+    {q:"Synonym of Fast?", options:["Slow","Quick","Late","Stop"], answer:1}
+  ]
+};
+
+let selectedTest = [];
+
+function startTest(){
+  const subject = document.getElementById("subject").value;
+  selectedTest = tests[subject];
+  let html = "";
+
+  selectedTest.forEach((item, index) => {
+    html += `<div class="question">${index+1}. ${item.q}</div>`;
+    item.options.forEach((opt, i) => {
+      html += `<div class="option"><input type="radio" name="q${index}" value="${i}"> ${opt}</div>`;
+    });
+  });
+
+  html += `<button class="submit-btn" onclick="submitTest()">✅ Submit Test</button>`;
+  document.getElementById("quizArea").innerHTML = html;
+  document.getElementById("result").innerHTML = "";
+}
+
+function submitTest(){
+  let score = 0;
+  selectedTest.forEach((item, index) => {
+    const selected = document.querySelector(`input[name="q${index}"]:checked`);
+    if(selected && selected.value == item.answer) score++;
+  });
+
+  const msg = score === selectedTest.length ? "🎉 Perfect Score!" : score >= selectedTest.length/2 ? "👍 Good Job!" : "📚 Keep Practicing!";
+
+  document.getElementById("result").innerHTML = `
+    <h2>Test Completed!</h2>
+    <div class="score-badge">${score}/${selectedTest.length}</div>
+    <p class="score-msg">${msg}</p>
+    <button class="retry-btn" onclick="location.reload()">🔄 Try Again</button>
+  `;
+  document.getElementById("quizArea").innerHTML = "";
+}
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Total Students</title>
+
+<style>
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+font-family: Arial, sans-serif;
+min-height: 100vh;
+background: #0d1b2a;
+overflow-x: hidden;
+}
+
+body::before {
+content: '';
+position: fixed;
+inset: 0;
+background-image:
+  linear-gradient(rgba(0,180,180,0.04) 1px, transparent 1px),
+  linear-gradient(90deg, rgba(0,180,180,0.04) 1px, transparent 1px);
+background-size: 40px 40px;
+z-index: 0;
+}
+
+body::after {
+content: '';
+position: fixed;
+width: 600px; height: 600px;
+background: radial-gradient(circle, rgba(0,180,180,0.12), transparent 70%);
+top: -150px; right: -150px;
+border-radius: 50%;
+animation: blobMove 10s ease-in-out infinite alternate;
+z-index: 0;
+}
+
+@keyframes blobMove {
+0%   { transform: translate(0,0) scale(1); }
+100% { transform: translate(-60px,60px) scale(1.1); }
+}
+
+.navbar {
+height: 64px;
+background: linear-gradient(90deg, #0d1b2a, #1a3a4a);
+color: white;
+display: flex;
+align-items: center;
+padding: 0 25px;
+font-size: 20px;
+font-weight: bold;
+border-bottom: 2px solid rgba(0,180,180,0.3);
+position: relative;
+z-index: 100;
+letter-spacing: 1px;
+}
+
+.container {
+width: 700px;
+margin: 40px auto;
+background: rgba(255,255,255,0.04);
+backdrop-filter: blur(10px);
+border: 1px solid rgba(0,180,180,0.2);
+border-radius: 16px;
+padding: 30px;
+position: relative;
+z-index: 10;
+}
+
+h2 {
+text-align: center;
+color: #00dcdc;
+margin-bottom: 20px;
+letter-spacing: 1px;
+}
+
+#count {
+font-size: 18px;
+color: rgba(0,220,220,0.8);
+margin-bottom: 20px;
+text-align: center;
+}
+
+ul { list-style: none; padding: 0; }
+
+li {
+background: rgba(0,180,180,0.08);
+border: 1px solid rgba(0,180,180,0.15);
+margin: 8px 0;
+padding: 12px 16px;
+border-radius: 10px;
+color: rgba(255,255,255,0.8);
+transition: background 0.2s;
+}
+
+li:hover { background: rgba(0,180,180,0.15); color: white; }
+
+input {
+width: 70%;
+padding: 10px 14px;
+border: 1px solid rgba(0,180,180,0.3);
+border-radius: 10px;
+background: rgba(255,255,255,0.05);
+color: white;
+font-size: 14px;
+outline: none;
+}
+
+input::placeholder { color: rgba(255,255,255,0.35); }
+input:focus { border-color: #00dcdc; }
+
+button {
+padding: 10px 20px;
+background: linear-gradient(90deg, #00b4b4, #6C5CE7);
+color: white;
+border: none;
+border-radius: 10px;
+cursor: pointer;
+font-size: 14px;
+margin-left: 8px;
+transition: transform 0.2s;
+}
+
+button:hover { transform: scale(1.05); }
+
+</style>
+</head>
+
+<body>
+
+<a href="teacher-dashboard.html" style="position:fixed;bottom:20px;left:20px;z-index:100;display:inline-flex;align-items:center;text-decoration:none;color:#00dcdc;font-size:20px;background:rgba(0,180,180,0.1);padding:8px 16px;border-radius:20px;border:1px solid rgba(0,180,180,0.3);">&#8592;</a>
+<a href="tcourses.html" style="position:fixed;bottom:20px;right:20px;z-index:100;display:inline-flex;align-items:center;text-decoration:none;color:#00dcdc;font-size:20px;background:rgba(0,180,180,0.1);padding:8px 16px;border-radius:20px;border:1px solid rgba(0,180,180,0.3);">&#8594;</a>
+
+<div class="navbar">👥 Total Students</div>
+
+<div class="container">
+  <h2>Student List</h2>
+  <div id="count"></div>
+  <ul id="studentList"></ul>
+  <br>
+  <input type="text" id="newStudent" placeholder="Enter student name">
+  <button onclick="addStudent()">Add</button>
+</div>
+
+<script>
+let students = ["Krishn","Ananya","Rohan","Rahul","Priya","Arjun","Kavya"];
+
+function displayStudents(){
+  const list = document.getElementById("studentList");
+  list.innerHTML = "";
+  students.forEach(name => {
+    const li = document.createElement("li");
+    li.innerText = name;
+    list.appendChild(li);
+  });
+  document.getElementById("count").innerText = "Total Students: " + students.length;
+}
+
+function addStudent(){
+  const name = document.getElementById("newStudent").value;
+  if(name === "") return;
+  students.push(name);
+  document.getElementById("newStudent").value = "";
+  displayStudents();
+}
+
+displayStudents();
+</script>
+
+</body>
+</html>

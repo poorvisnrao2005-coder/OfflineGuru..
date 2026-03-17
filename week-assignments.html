@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Assignments</title>
+
+<style>
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+font-family: Arial, sans-serif;
+min-height: 100vh;
+background: #f0eeff;
+overflow-x: hidden;
+}
+
+body::before, body::after {
+content: '';
+position: fixed;
+border-radius: 50%;
+filter: blur(80px);
+opacity: 0.2;
+animation: blobMove 8s ease-in-out infinite alternate;
+z-index: 0;
+}
+
+body::before {
+width: 500px; height: 500px;
+background: radial-gradient(circle, #6C5CE7, #a29bfe);
+top: -100px; left: -100px;
+}
+
+body::after {
+width: 400px; height: 400px;
+background: radial-gradient(circle, #fd79a8, #e17055);
+bottom: -100px; right: -100px;
+animation-delay: 3s;
+}
+
+@keyframes blobMove {
+0%   { transform: translate(0,0) scale(1); }
+100% { transform: translate(60px,60px) scale(1.15); }
+}
+
+/* title */
+.page-title {
+text-align: center;
+color: #2d3436;
+font-size: 26px;
+letter-spacing: 1px;
+margin: 30px 0 20px;
+position: relative;
+z-index: 10;
+}
+
+/* tabs */
+.tabs {
+text-align: center;
+margin-bottom: 24px;
+position: relative;
+z-index: 10;
+}
+
+.tabs button {
+padding: 10px 24px;
+margin: 6px;
+border: 1px solid rgba(108,92,231,0.3);
+background: rgba(108,92,231,0.1);
+color: #6C5CE7;
+border-radius: 25px;
+cursor: pointer;
+font-size: 14px;
+transition: all 0.2s;
+}
+
+.tabs button:hover, .tabs button.active {
+background: linear-gradient(90deg, #6C5CE7, #a29bfe);
+color: white;
+border-color: transparent;
+box-shadow: 0 4px 15px rgba(108,92,231,0.4);
+}
+
+/* container */
+.container {
+width: 70%;
+margin: 0 auto;
+padding-bottom: 80px;
+position: relative;
+z-index: 10;
+}
+
+/* card */
+.assignment-card {
+background: white;
+border: 1px solid rgba(108,92,231,0.15);
+margin: 16px 0;
+padding: 20px 24px;
+border-radius: 18px;
+box-shadow: 0 6px 20px rgba(108,92,231,0.1);
+transition: transform 0.2s, box-shadow 0.2s;
+animation: cardFloat 4s ease-in-out infinite;
+}
+
+.assignment-card:nth-child(2) { animation-delay: 0.4s; }
+.assignment-card:nth-child(3) { animation-delay: 0.8s; }
+
+@keyframes cardFloat {
+0%, 100% { transform: translateY(0); }
+50%       { transform: translateY(-5px); }
+}
+
+.assignment-card:hover {
+transform: translateY(-8px);
+box-shadow: 0 12px 30px rgba(108,92,231,0.2);
+}
+
+.card-top {
+display: flex;
+justify-content: space-between;
+align-items: center;
+margin-bottom: 10px;
+}
+
+.badge {
+padding: 4px 12px;
+border-radius: 20px;
+color: white;
+font-size: 12px;
+font-weight: bold;
+}
+
+.daily   { background: linear-gradient(90deg, #00b894, #00cec9); }
+.weekly  { background: linear-gradient(90deg, #fdcb6e, #e17055); }
+.monthly { background: linear-gradient(90deg, #fd79a8, #e17055); }
+
+.status { font-weight: bold; font-size: 14px; }
+.done    { color: #00b894; }
+.pending { color: #e17055; }
+
+.assignment-card h3 {
+color: #5A4BD8;
+font-size: 17px;
+margin-bottom: 6px;
+}
+
+.assignment-card p {
+color: #555;
+font-size: 13px;
+margin: 4px 0;
+}
+
+.mark-btn {
+margin-top: 12px;
+padding: 8px 20px;
+border: none;
+border-radius: 25px;
+background: linear-gradient(90deg, #6C5CE7, #a29bfe);
+color: white;
+font-size: 13px;
+cursor: pointer;
+box-shadow: 0 4px 12px rgba(108,92,231,0.3);
+transition: transform 0.2s;
+}
+
+.mark-btn:hover { transform: scale(1.05); }
+
+</style>
+</head>
+
+<body>
+
+<a href="assignment.html" style="position:fixed;bottom:20px;left:20px;z-index:100;display:inline-flex;align-items:center;text-decoration:none;color:#6C5CE7;font-size:20px;background:rgba(108,92,231,0.1);padding:8px 16px;border-radius:20px;border:1px solid rgba(108,92,231,0.3);">&#8592;</a>
+
+<h2 class="page-title">📚 Weekly Assignments</h2>
+
+<div class="tabs">
+  <button onclick="showAssignments('daily')" class="active" id="btn-daily">Daily</button>
+  <button onclick="showAssignments('weekly')" id="btn-weekly">Weekly</button>
+  <button onclick="showAssignments('monthly')" id="btn-monthly">Monthly</button>
+</div>
+
+<div class="container" id="assignmentList"></div>
+
+<script>
+
+const assignments = [
+  {title:"Math Practice", desc:"Solve 10 sums", type:"daily", subject:"Mathematics", due:"2026-03-18", status:"pending"},
+  {title:"Algebra Test", desc:"Chapter 4 algebra", type:"weekly", subject:"Mathematics", due:"2026-03-22", status:"pending"},
+  {title:"Math Revision", desc:"Revise all formulas", type:"monthly", subject:"Mathematics", due:"2026-03-30", status:"pending"},
+  {title:"Science Lab Report", desc:"Write lab report", type:"daily", subject:"Science", due:"2026-03-18", status:"pending"},
+  {title:"Science Project", desc:"Make volcano model", type:"weekly", subject:"Science", due:"2026-03-22", status:"pending"},
+  {title:"Science Revision", desc:"Revise all chapters", type:"monthly", subject:"Science", due:"2026-03-30", status:"pending"},
+  {title:"English Writing", desc:"Write essay", type:"daily", subject:"English", due:"2026-03-18", status:"done"},
+  {title:"English Grammar", desc:"Complete grammar exercises", type:"weekly", subject:"English", due:"2026-03-21", status:"pending"},
+  {title:"English Revision", desc:"Revise all lessons", type:"monthly", subject:"English", due:"2026-03-30", status:"pending"},
+  {title:"History Notes", desc:"Chapter 3 notes", type:"daily", subject:"History", due:"2026-03-18", status:"done"},
+  {title:"History Essay", desc:"Write about World War II", type:"weekly", subject:"History", due:"2026-03-21", status:"pending"},
+  {title:"History Revision", desc:"Revise all chapters", type:"monthly", subject:"History", due:"2026-03-30", status:"pending"},
+  {title:"Geography Map", desc:"Draw world map", type:"daily", subject:"Geography", due:"2026-03-18", status:"pending"},
+  {title:"Climate Types", desc:"Study climate zones", type:"weekly", subject:"Geography", due:"2026-03-22", status:"pending"},
+  {title:"Geography Revision", desc:"Revise all topics", type:"monthly", subject:"Geography", due:"2026-03-30", status:"pending"},
+  {title:"Art Sketch", desc:"Draw a landscape", type:"daily", subject:"Art", due:"2026-03-18", status:"pending"},
+  {title:"Art Project", desc:"Create a painting", type:"weekly", subject:"Art", due:"2026-03-22", status:"done"},
+  {title:"Art Portfolio", desc:"Complete portfolio", type:"monthly", subject:"Art", due:"2026-03-30", status:"pending"}
+];
+
+const urlSubject = new URLSearchParams(window.location.search).get('subject');
+if(urlSubject) document.querySelector('.page-title').innerText = '📚 ' + urlSubject + ' Assignments';
+
+function showAssignments(type) {
+  document.querySelectorAll('.tabs button').forEach(b => b.classList.remove('active'));
+  document.getElementById('btn-' + type).classList.add('active');
+
+  let filtered = assignments.filter(a => a.type === type);
+  if(urlSubject) filtered = filtered.filter(a => a.subject === urlSubject);
+
+  let html = "";
+  filtered.forEach(a => {
+    html += `
+      <div class="assignment-card">
+        <div class="card-top">
+          <span class="badge ${a.type}">${a.type.toUpperCase()}</span>
+          <span class="status ${a.status}">${a.status === "done" ? "✅ Done" : "⏳ Pending"}</span>
+        </div>
+        <h3>${a.title}</h3>
+        <p>${a.desc}</p>
+        <p><b>Subject:</b> ${a.subject}</p>
+        <p><b>Due:</b> ${a.due}</p>
+        <button class="mark-btn" onclick="markDone('${a.title}', '${type}')">✔ Mark as Done</button>
+      </div>
+    `;
+  });
+
+  if(filtered.length === 0) html = '<p style="text-align:center;color:#888;margin-top:20px;">No assignments found.</p>';
+  document.getElementById("assignmentList").innerHTML = html;
+}
+
+function markDone(title, type) {
+  assignments.forEach(a => { if(a.title === title) a.status = "done"; });
+  showAssignments(type);
+}
+
+showAssignments("daily");
+
+</script>
+
+</body>
+</html>

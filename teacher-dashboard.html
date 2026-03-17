@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Teacher Dashboard</title>
+
+<style>
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+font-family: Arial, Helvetica, sans-serif;
+min-height: 100vh;
+background: #0d1b2a;
+overflow-x: hidden;
+}
+
+/* geometric background pattern */
+body::before {
+content: '';
+position: fixed;
+inset: 0;
+background-image:
+  linear-gradient(rgba(0,180,180,0.04) 1px, transparent 1px),
+  linear-gradient(90deg, rgba(0,180,180,0.04) 1px, transparent 1px);
+background-size: 40px 40px;
+z-index: 0;
+}
+
+/* animated blobs */
+body::after {
+content: '';
+position: fixed;
+width: 600px; height: 600px;
+background: radial-gradient(circle, rgba(0,180,180,0.12), transparent 70%);
+top: -150px; right: -150px;
+border-radius: 50%;
+animation: blobMove 10s ease-in-out infinite alternate;
+z-index: 0;
+}
+
+@keyframes blobMove {
+0%   { transform: translate(0,0) scale(1); }
+100% { transform: translate(-60px,60px) scale(1.1); }
+}
+
+/* Navbar */
+.navbar {
+height: 64px;
+background: linear-gradient(90deg, #0d1b2a, #1a3a4a);
+color: white;
+display: flex;
+align-items: center;
+justify-content: space-between;
+padding: 0 25px;
+font-size: 20px;
+font-weight: bold;
+border-bottom: 2px solid rgba(0,180,180,0.3);
+position: relative;
+z-index: 100;
+letter-spacing: 1px;
+}
+
+.navbar span {
+font-size: 14px;
+color: rgba(0,220,220,0.8);
+font-weight: normal;
+}
+
+/* Sidebar */
+.sidebar {
+position: fixed;
+top: 64px;
+left: 0;
+width: 220px;
+height: 100%;
+background: linear-gradient(180deg, #0d1b2a, #112233);
+padding-top: 20px;
+border-right: 1px solid rgba(0,180,180,0.15);
+z-index: 50;
+}
+
+.sidebar a {
+display: flex;
+align-items: center;
+gap: 10px;
+color: rgba(255,255,255,0.7);
+padding: 14px 20px;
+text-decoration: none;
+font-size: 15px;
+border-left: 3px solid transparent;
+transition: all 0.2s;
+}
+
+.sidebar a:hover {
+background: rgba(0,180,180,0.1);
+color: #00dcdc;
+border-left-color: #00dcdc;
+}
+
+/* Main */
+.main {
+margin-left: 220px;
+margin-top: 64px;
+padding: 30px;
+position: relative;
+z-index: 10;
+}
+
+/* Stats cards */
+.cards {
+display: grid;
+grid-template-columns: repeat(4, 1fr);
+gap: 20px;
+margin-bottom: 30px;
+}
+
+.card {
+background: rgba(255,255,255,0.04);
+backdrop-filter: blur(10px);
+border: 1px solid rgba(0,180,180,0.2);
+border-radius: 16px;
+padding: 22px;
+text-align: center;
+transition: transform 0.3s, box-shadow 0.3s;
+animation: cardFloat 4s ease-in-out infinite;
+}
+
+.card:nth-child(2) { animation-delay: 0.5s; }
+.card:nth-child(3) { animation-delay: 1s; }
+.card:nth-child(4) { animation-delay: 1.5s; }
+
+@keyframes cardFloat {
+0%, 100% { transform: translateY(0); }
+50%       { transform: translateY(-6px); }
+}
+
+.card:hover {
+transform: translateY(-10px);
+box-shadow: 0 10px 30px rgba(0,180,180,0.2);
+}
+
+.card-icon {
+font-size: 28px;
+margin-bottom: 8px;
+}
+
+.card h3 {
+color: rgba(255,255,255,0.6);
+font-size: 13px;
+text-transform: uppercase;
+letter-spacing: 1px;
+margin-bottom: 6px;
+}
+
+.card h2 {
+font-size: 32px;
+font-weight: bold;
+background: linear-gradient(135deg, #00dcdc, #a29bfe);
+-webkit-background-clip: text;
+-webkit-text-fill-color: transparent;
+}
+
+/* Section title */
+.section-title {
+color: #00dcdc;
+font-size: 18px;
+letter-spacing: 1px;
+margin-bottom: 16px;
+padding-bottom: 8px;
+border-bottom: 1px solid rgba(0,180,180,0.2);
+}
+
+/* Table */
+table {
+width: 100%;
+border-collapse: collapse;
+background: rgba(255,255,255,0.03);
+backdrop-filter: blur(10px);
+border-radius: 16px;
+overflow: hidden;
+border: 1px solid rgba(0,180,180,0.15);
+}
+
+th, td {
+padding: 14px 16px;
+text-align: left;
+border-bottom: 1px solid rgba(0,180,180,0.08);
+}
+
+th {
+background: linear-gradient(90deg, rgba(0,180,180,0.2), rgba(108,92,231,0.2));
+color: #00dcdc;
+font-size: 13px;
+text-transform: uppercase;
+letter-spacing: 1px;
+}
+
+td {
+color: rgba(255,255,255,0.75);
+font-size: 14px;
+}
+
+tr:hover td {
+background: rgba(0,180,180,0.05);
+color: white;
+}
+
+button {
+padding: 6px 14px;
+border: 1px solid rgba(0,180,180,0.4);
+background: rgba(0,180,180,0.1);
+color: #00dcdc;
+border-radius: 20px;
+cursor: pointer;
+font-size: 13px;
+transition: all 0.2s;
+}
+
+button:hover {
+background: rgba(0,180,180,0.3);
+}
+
+</style>
+</head>
+
+<body>
+
+<!-- Navbar -->
+<div class="navbar">
+  🎓 Teacher Dashboard
+  <span>👋 Welcome, Teacher</span>
+</div>
+
+<!-- Sidebar -->
+<div class="sidebar">
+  <a href="teacher-dashboard.html">🏠 Dashboard</a>
+  <a href="tcourses.html">📚 My Courses</a>
+  <a href="total-student.html">👥 Students</a>
+  <a href="tassignment.html">📝 Assignments</a>
+  <a href="tdoubt.html">💬 Doubts</a>
+  <a href="teacher-dashboard.html">⚙️ Settings</a>
+  <a href="index.html">🚪 Logout</a>
+</div>
+
+<!-- Main Content -->
+<div class="main">
+
+  <!-- Cards -->
+  <div class="cards">
+
+    <a href="total-student.html" style="text-decoration:none;">
+    <div class="card">
+      <div class="card-icon">👥</div>
+      <h3>Total Students</h3>
+      <h2>120</h2>
+    </div>
+    </a>
+
+    <a href="tcourses.html" style="text-decoration:none;">
+    <div class="card">
+      <div class="card-icon">📚</div>
+      <h3>Courses</h3>
+      <h2>8</h2>
+    </div>
+    </a>
+
+    <a href="tassignment.html" style="text-decoration:none;">
+    <div class="card">
+      <div class="card-icon">📝</div>
+      <h3>Assignments</h3>
+      <h2>15</h2>
+    </div>
+    </a>
+
+    <a href="tdoubt.html" style="text-decoration:none;">
+    <div class="card">
+      <div class="card-icon">💬</div>
+      <h3>Doubts</h3>
+      <h2>5</h2>
+    </div>
+    </a>
+
+  </div>
+
+  <!-- Student Table -->
+  <p class="section-title">📋 Student List</p>
+
+  <table>
+    <tr>
+      <th>Name</th>
+      <th>Course</th>
+      <th>Progress</th>
+      <th>Action</th>
+    </tr>
+    <tr>
+      <td>Krishn</td>
+      <td>Mathematics</td>
+      <td>80%</td>
+      <td><button>View</button></td>
+    </tr>
+    <tr>
+      <td>Ananya</td>
+      <td>Science</td>
+      <td>75%</td>
+      <td><button>View</button></td>
+    </tr>
+    <tr>
+      <td>Kiran</td>
+      <td>English</td>
+      <td>90%</td>
+      <td><button>View</button></td>
+    </tr>
+    <tr>
+      <td>Megha</td>
+      <td>Computer</td>
+      <td>70%</td>
+      <td><button>View</button></td>
+    </tr>
+  </table>
+
+</div>
+
+</body>
+</html>
